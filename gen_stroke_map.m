@@ -11,12 +11,12 @@ function S = gen_stroke_map(img, kernel_size, stroke_width, n_directions, smooth
     end
 
     % Sobel operators
-    sobel_x = -fspecial('sobel');   % Horizontal Sobel operator
-    sobel_y = sobel_x';             % Vertical Sobel operator
+    sobel_x = -fspecial('sobel'); % Horizontal Sobel operator
+    sobel_y = sobel_x'; % Vertical Sobel operator
 
     % Filter
-    grad_x = conv2(img, sobel_x, 'same');   % Horizontal Sobel filter
-    grad_y = conv2(img, sobel_y, 'same');   % Vertical Sobel filter
+    grad_x = conv2(img, sobel_x, 'same'); % Horizontal Sobel filter
+    grad_y = conv2(img, sobel_y, 'same'); % Vertical Sobel filter
 
     % Gradient map (G)
     G = sqrt(grad_x.^2 + grad_y.^2);

@@ -32,5 +32,4 @@ function R = gen_pencil_drawing(img, kernel_size, stroke_width, num_of_direction
         R = imadjust(R, [0, 1], [0, 1]); % Adjust intensity
         return;
     end
-
 end
