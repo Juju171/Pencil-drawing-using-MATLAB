@@ -61,10 +61,29 @@ function S = gen_stroke_map(img, kernel_size, stroke_width, n_directions, smooth
     for d = 1:n_directions
         ker = imrotate(initial_kernel, (d * 180) / n_directions, 'bilinear', 'crop');
         S_dir(:, :, d) = conv2(C(:, :, d), ker, 'same'); % Convolution
+
+        % % Show intermediate results
+        % S_dir_show = rescale(S_dir(:, :, d)); % Only current direction
+        % figure; imshow(S_dir_show); axis off;
+        % title(['Direction ', num2str(d)]);
+        % 
+        % % Save intermediate results
+        % filename = fullfile('outputs', ['stroke_map_direction_', num2str(d), '.png']);
+        % imwrite(S_dir_show, filename);
     end
     S = sum(S_dir, 3); % Sum over 3 directions
 
     S = rescale(S); % Normalization of S: values are in [0,1]
 
+    % % Show negative result
+    % figure; imshow(S); axis off;
+    % % Save negative result
+    % filename = fullfile('outputs', 'stroke_map_negative.png');
+    % imwrite(S, filename);
+
     S = 1 - S; % Inversion
+
+    % % Save final result
+    % filename = fullfile('outputs', 'stroke_map.png');
+    % imwrite(S, filename);
 end
