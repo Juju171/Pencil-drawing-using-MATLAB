@@ -1,6 +1,7 @@
 function T = gen_pencil_texture(img, H, J)
-    % H = pencil texture
+    % H = real pencil texture
     % J = tone map
+    % T = pencil texture map
 
     [height, width] = size(img); % Image dimensions
 
@@ -8,7 +9,7 @@ function T = gen_pencil_texture(img, H, J)
     % Regularization parameter
     lamda = 0.2;
 
-    % Adjust H (pencil texture) and J (tone map) to corresponding size
+    % Adjust H (real pencil texture) and J (tone map) to corresponding size
     H_resize = im2double(imresize(H, [height, width], 'bicubic')); % Resize H
     H_reshape = reshape(H_resize, [], 1); % Reshape to column vector
     
@@ -22,19 +23,19 @@ function T = gen_pencil_texture(img, H, J)
     % Sparse matrix initialization for the conjugate gradient method
     sparse_matrix = spdiags(log_H, 0, height * width, height * width); % Diagonal matrix
     e = ones(height * width, 1);
-    ee = [ -e, e ];
+    ee = [-e, e];
     diags_x = [0, height * width];
     diags_y = [0, 1];
     
     dx = spdiags(ee, diags_x, height * width, height * width); % Matrix for dx
     dy = spdiags(ee, diags_y, height * width, height * width); % Matrix for dy
 
-    % Calculate the matrix A and b (to solve Ax = b)
+    % Matrix A and b to solve Ax = b
     A = lamda * ((dx * dx') + (dy * dy') ) + sparse_matrix' * sparse_matrix;
     b = sparse_matrix' * log_J;
 
     % Conjugate gradient
-    beta = pcg(A, b, 1e-8,200); % pcg for conjugate gradient
+    beta = pcg(A, b, 1e-7,100);
 
     % Reshape result
     beta_reshaped = reshape(beta, [height, width]);

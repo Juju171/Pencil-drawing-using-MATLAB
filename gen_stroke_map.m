@@ -55,17 +55,6 @@ function S = gen_stroke_map(img, kernel_size, stroke_width, n_directions, smooth
         end
     end
 
-    % if stroke_width > 0
-    %     for w = 1:stroke_width
-    %         if (kernel_size + 1 - w) >= 1
-    %             initial_kernel(kernel_size + 1 - w, :) = 1;
-    %         end
-    %         if (kernel_size + 1 + w) <= (kernel_size * 2 + 1)
-    %             initial_kernel(kernel_size + 1 + w, :) = 1;
-    %         end
-    %     end
-    % end
-
     % Calculation of S'
     S_dir = zeros(size(C)); % S' initialization 
 

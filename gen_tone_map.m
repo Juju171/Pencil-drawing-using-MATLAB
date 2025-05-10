@@ -1,8 +1,8 @@
 function J = gen_tone_map(img, w_group)
-    % w_group = 0; % Default value
-    
-    %% Model-based Tone Transfer 
-    % Calculate the parameters and define weight groups
+    % J = tone map
+
+    %% Model-based Tone Transfer  
+    % Weight groups
     w_mat = [11, 37, 52;
              29, 29, 42;
              2, 22, 76];
@@ -41,8 +41,8 @@ function J = gen_tone_map(img, w_group)
     h = h / sum(h); % Normalize
     H = cumsum(h); % CDF of original histogram
     
-    % Histogram Matching
-    lut = zeros(1, pixel_values); % Initialization
+    % Histogram matching (LUT)
+    lut = zeros(1, pixel_values); % Look-up-table initialization
     for v = 1:pixel_values
         % Find closest value
         [~, argmin_dist] = min(abs(P - H(v)));
