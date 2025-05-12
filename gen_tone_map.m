@@ -10,12 +10,12 @@ function J = gen_tone_map(img, w_group)
 
     % Parameters definition according to tone levels (values from paper)
     % Bright layer [171 - 255]
-    sigma_bright = 9; 
+    sigma_bright = 9;
     % Mild layer [86 - 170]
     u_mild_a = 105;
-    u_mild_b = 225;  
+    u_mild_b = 225;
     % Dark layer [0 - 85]
-    mu_dark = 90; 
+    mu_dark = 90;
     sigma_dark = 11;
     
     % Desired histogram (p(v)) (target tone distribution)

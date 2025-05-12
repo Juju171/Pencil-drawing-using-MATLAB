@@ -1,4 +1,4 @@
-function R = gen_pencil_drawing(img, kernel_size, stroke_width, num_of_directions, smooth_kernel, ... %rgb,
+function R = gen_pencil_drawing(img, kernel_size, stroke_width, num_of_directions, smooth_kernel, ...
     w_group, pencil_texture, stroke_darkness, tone_darkness)
 
     % Conversion
@@ -16,7 +16,7 @@ function R = gen_pencil_drawing(img, kernel_size, stroke_width, num_of_direction
     %% Tone map
     J = gen_tone_map(im, w_group);
 
-    %% Pencil texture map 
+    %% Pencil texture map
     T = gen_pencil_texture(im, pencil_texture, J);
     T = T .^ tone_darkness;
 

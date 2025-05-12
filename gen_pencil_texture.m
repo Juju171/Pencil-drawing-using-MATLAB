@@ -27,8 +27,8 @@ function T = gen_pencil_texture(img, H, J)
     diags_x = [0, height * width];
     diags_y = [0, 1];
     
-    dx = spdiags(ee, diags_x, height * width, height * width); % Matrix for dx
-    dy = spdiags(ee, diags_y, height * width, height * width); % Matrix for dy
+    dx = spdiags(ee, diags_x, height * width, height * width);
+    dy = spdiags(ee, diags_y, height * width, height * width);
 
     % Matrix A and b to solve Ax = b
     A = lamda * ((dx * dx') + (dy * dy') ) + sparse_matrix' * sparse_matrix;

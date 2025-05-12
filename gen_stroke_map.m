@@ -35,16 +35,13 @@ function S = gen_stroke_map(img, kernel_size, stroke_width, n_directions, smooth
 
     % Classification: selecting the maximum value among the responses in all directions
     [~, max_direction] = max(response_map, [], 3);
-    % every direction has a (height X width) matrix. For every pixel in the matrix,
-    % "max" returns the index of the direction that holds the pixel with the maximum value
-    % thus we get the max_direction map is a (height X width) matrix with direction numbers.
     
     C = zeros(size(response_map)); % Classification map (C) initialization
     for d = 1:n_directions
         C(:, :, d) = G .* (max_direction == d);
     end
 
-    %% Line Shaping: pencil stroke map (S) generation 
+    %% Line Shaping: pencil stroke map (S) generation
     % Width of the stroke
     for w = 0:stroke_width-1
         if (kernel_size + 1 - w) >= 1
@@ -56,7 +53,7 @@ function S = gen_stroke_map(img, kernel_size, stroke_width, n_directions, smooth
     end
 
     % Calculation of S'
-    S_dir = zeros(size(C)); % S' initialization 
+    S_dir = zeros(size(C)); % S' initialization
 
     for d = 1:n_directions
         ker = imrotate(initial_kernel, (d * 180) / n_directions, 'bilinear', 'crop');
@@ -74,12 +71,6 @@ function S = gen_stroke_map(img, kernel_size, stroke_width, n_directions, smooth
     S = sum(S_dir, 3); % Sum over 3 directions
 
     S = rescale(S); % Normalization of S: values are in [0,1]
-
-    % % Show negative result
-    % figure; imshow(S); axis off;
-    % % Save negative result
-    % filename = fullfile('outputs', 'stroke_map_negative.png');
-    % imwrite(S, filename);
 
     S = 1 - S; % Inversion
 
